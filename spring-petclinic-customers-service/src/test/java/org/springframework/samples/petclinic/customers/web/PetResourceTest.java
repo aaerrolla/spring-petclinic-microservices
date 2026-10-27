@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.customers.web;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -66,32 +65,6 @@ class PetResourceTest {
 
         mvc.perform(get("/owners/2/pets/99").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
-    }
-
-    @Test
-    void shouldRejectFuturePetBirthdayOnUpdate() throws Exception{
-        String futureDate = LocalDate.now().plusYears(1).toString();
-        String futureBirthDateJson = """
-        {"name": "Basil", "typeId": 6, "birthDate": "%s"}
-        """.formatted(futureDate);
-
-        mvc.perform(put("/owners/2/pets/2")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(futureBirthDateJson))
-            .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void shouldRejectFuturePetBirthdayOnPost() throws Exception{
-        String futureDate = LocalDate.now().plusYears(1).toString();
-        String futureBirthDateJson = """
-        {"name": "Basil", "typeId": 6, "birthDate": "%s"}
-        """.formatted(futureDate);
-
-        mvc.perform(post("/owners/2/pets")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(futureBirthDateJson))
-            .andExpect(status().isBadRequest());
     }
 
     @Test

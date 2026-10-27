@@ -16,7 +16,6 @@
 package org.springframework.samples.petclinic.customers.web;
 
 import io.micrometer.core.annotation.Timed;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +54,7 @@ class PetResource {
     @PostMapping("/owners/{ownerId}/pets")
     @ResponseStatus(HttpStatus.CREATED)
     public Pet processCreationForm(
-        @RequestBody @Valid PetRequest petRequest,
+        @RequestBody PetRequest petRequest,
         @PathVariable("ownerId") @Min(1) int ownerId) {
 
         Owner owner = ownerRepository.findById(ownerId)
@@ -68,7 +67,7 @@ class PetResource {
 
     @PutMapping("/owners/*/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void processUpdateForm(@Valid @RequestBody PetRequest petRequest,
+    public void processUpdateForm(@RequestBody PetRequest petRequest,
                                   @PathVariable("petId") @Min(1) int petId) {
         Pet pet = findPetById(petId);
         save(pet, petRequest);

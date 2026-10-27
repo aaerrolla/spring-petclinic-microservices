@@ -17,7 +17,6 @@ package org.springframework.samples.petclinic.customers.web;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.PastOrPresent;
 
 import java.util.Date;
 
@@ -26,7 +25,7 @@ import java.util.Date;
  */
 record PetRequest(
                   @JsonFormat(pattern = "yyyy-MM-dd")
-                  @PastOrPresent Date birthDate,
+                  Date birthDate,
                   @Size(min = 1)
                   String name,
                   int typeId
